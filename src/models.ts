@@ -1,5 +1,4 @@
 export type AppProps = {}
-// export type Index = {}
 export type AppState = {
   value: number
   isValid: boolean

@@ -2,32 +2,13 @@ import React from 'react'
 import './App.css'
 import Contract from './contract'
 import { AppProps, AppState } from './models'
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.tsx</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
+import Button from 'react-bootstrap/Button'
+import Alert from 'react-bootstrap/Alert'
 
 const App = class Index extends React.Component<AppProps, AppState> {
-  textInput: any
-  contract: Contract = new Contract()
-  value: number = 0
+  public textInput: any
+  private contract: Contract = new Contract()
+  private value: number
 
   constructor(props: AppProps) {
     super(props)
@@ -71,11 +52,9 @@ const App = class Index extends React.Component<AppProps, AppState> {
   }
 
   render() {
-    const loomyAlert = (
-      <div className="alert alert-warning">
-        I dare you to type 47 and press Confirm !
-      </div>
-    )
+    const loomyAlert = () => {
+      return <Alert variant="success">I dare you to enter 47!</Alert>
+    }
 
     return (
       <div className="container" style={{ marginTop: 10 }}>
@@ -85,7 +64,7 @@ const App = class Index extends React.Component<AppProps, AppState> {
           }}
         >
           <div className="form-group">
-            <label>Value</label>
+            <label>Enter Value</label>
             <input
               type="number"
               className="form-control"
@@ -94,20 +73,22 @@ const App = class Index extends React.Component<AppProps, AppState> {
             />
             <small className="form-text text-muted">Set a number</small>
           </div>
-          <button
-            type="button"
-            disabled={!this.state.isValid || this.state.isSending}
-            className="btn btn-primary"
+          <Button
+            size="lg"
+            type="submit"
+            variant="primary"
             onClick={() => this.confirmValue()}
+            disabled={!this.state.isValid || this.state.isSending}
+            block
           >
             Confirm
-          </button>
+          </Button>
         </form>
         <div className="alert alert-success">
           Value set is {this.state.value} (this value only updates if values is
           10 or ...)
         </div>
-        {this.state.tries === 3 && loomyAlert}
+        {this.state.tries === 3 && loomyAlert()}
         <hr />
         <pre>{this.state.tx && JSON.stringify(this.state.tx, null, 2)}</pre>
       </div>
